@@ -1,10 +1,28 @@
-class PlatziClass {
+function videoplay(id){
+  const urlsecreta = "https://platziultrasecretomasquelanasa.com/" + id;
+  console.log("Se esta reproduciendo desde la url "+ urlsecreta); 
+}
+function videostop(id) {
+  const urlsecreta = ("https://platziultrasecretomasquelanasa.com/" + id);
+  console.log("Pausamos la url " + urlsecreta)
+}
+
+
+export class PlatziClass {
   constructor({ name, videoID }) {
     this.name = name;
     this.video = videoID;
   }
+
+  reproducir(){
+    videoplay(this.video);
+  }
+  pausar(){
+    videostop(this.video);
+  }
 }
 
+ 
 const natalia = {
   name: "Natalia",
   age: 20,
@@ -39,6 +57,29 @@ const juanita = new student(
 );
 
 //prototipos con la sintaxis de clases
+class Curso {
+  constructor({
+    name, classes = [0], isFree = false, lang = "spanish"
+  }) {
+    this.name = name;
+    this.classes = classes;
+    this.isFree = isFree;
+    this.lang = lang;
+  }
+}
+
+const cursoProgBasico = new Curso({
+  name: "Curso Gratis de programacion basica",
+  isFree: true,
+});
+
+const CursoHtml = new Curso ({
+  name: "Curso basico html y css",
+  lang: "english", 
+});
+
+
+
 class Student2 {
   constructor({ name, age, cursosaprobados = [], email }) {
     this.name = name;
@@ -51,9 +92,49 @@ class Student2 {
   }
 }
 
-const miguelito = new Student2({
+
+class FreeStudent extends Student2{
+  constructor(props){
+    super(props)
+  }
+
+  approveCourse(newcourse){
+    if (newcourse.isFree){
+      this.cursosaprobados.push(newcourse) 
+    } else {
+      console.warn("Lo sentimos, " + this.name+ ", solo puedes tomar cursos abiertos")
+    }
+  }
+}
+
+class BasicStudent extends Student2{
+  constructor(props){
+    super(props)
+  }
+  approveCourse(newcourse){
+    if (newcourse.lang !== "english"){
+      this.cursosaprobados.push(newcourse) 
+    } else {
+      console.warn("Lo sentimos, " + this.name+ ", No puedes tomar cursos en ingles")
+    }
+  }
+}
+
+class ExpertStudent extends Student2{
+  constructor(props){
+    super(props)
+  }
+  approveCourse(newcourse) {
+    this.cursosaprobados.push(newcourse)
+  }
+}
+
+
+const miguelito = new FreeStudent({
   name: "Miguel",
   age: 28,
   cursosaprobados: ["ciencia de datos", "Sistemas computacionales"],
   email: "eduardani84@gmail.com",
 });
+
+miguelito()
