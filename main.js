@@ -1,3 +1,5 @@
+
+
 function videoplay(id){
   const urlsecreta = "https://platziultrasecretomasquelanasa.com/" + id;
   console.log("Se esta reproduciendo desde la url "+ urlsecreta); 
@@ -87,11 +89,39 @@ class Student2 {
     this.email = email;
     this.cursosaprobados = cursosaprobados;
   }
+
   aprobarCurso(nuevocursito) {
     this.cursosaprobados.push(nuevocursito);
   }
+
+  publicarComentrario(commentContent) {
+    const comment = new Comment({
+      content: commentContent,
+      studentName: this.name,
+    })
+    comment.publicar();
+  }
+
 }
 
+class TeacherStudent extends Student2{
+  constructor(props){
+    super(props)
+  }
+  approveCourse(newcourse) {
+
+    this.cursosaprobados.push(newcourse)
+  }
+
+  publicarComentrario(commentContent) {
+    const comment = new Comment({
+      content: commentContent,
+      studentName: this.name,
+      studentRole: "profesor",
+    })
+    comment.publicar();
+  }
+}
 
 class FreeStudent extends Student2{
   constructor(props){
@@ -130,11 +160,37 @@ class ExpertStudent extends Student2{
 }
 
 
-const miguelito = new FreeStudent({
+const angelo = new BasicStudent({
   name: "Miguel",
   age: 28,
   cursosaprobados: ["ciencia de datos", "Sistemas computacionales"],
   email: "eduardani84@gmail.com",
 });
 
-miguelito()
+
+// polimorfismo 
+class Comment {
+  constructor({
+    content,
+    studentName,
+    studentRole =  "estudiante",
+  }) {
+    this.content = content;
+    this.studentName = studentName;
+    this.studentRole = studentRole;
+    this.likes = 0;
+  }
+
+  publicar(){
+    console.log(this.studentName + "(" + this.studentRole+")");
+    console.log(this.likes + " Likes");
+    console.log(this.content);
+  }
+}
+
+const FreddyVega = new TeacherStudent({
+  name: "Freddy",
+  age: 31,
+  cursosaprobados: ["ciencia de datos"],
+  email: "FreddyCaluchis@gmail.com",
+});
